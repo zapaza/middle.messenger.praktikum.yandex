@@ -1,6 +1,4 @@
-import templateApp from './app.hbs';
-
 import './styles/index.css';
+import app from './app.hbs'
 
-
-document.body.innerHTML = templateApp({ page: `<div class="page__index">hello</div>` });
+document.body.innerHTML = app({page : `<div class="page__index">hello</div>`});
