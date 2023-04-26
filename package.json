@@ -1,7 +1,7 @@
 {
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
-  "description": "",
+  "description": "web-messenger",
   "scripts": {
     "dev": "parcel static/*.html --port 3000 --open chrome",
     "watch": "parcel watch static/*.html",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/zapaza/middle.messenger.praktikum.yandex.git"
   },
-  "author": "",
+  "author": "Stanislav Chumakov (Kosmos)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/zapaza/middle.messenger.praktikum.yandex/issues"
