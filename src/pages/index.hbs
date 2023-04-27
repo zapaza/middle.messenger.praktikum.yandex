@@ -1,0 +1,82 @@
+---
+screenTitle: Home
+pageStyles: demo
+fields:
+    -
+        label: Имя
+        name: name
+        errorText: Ошибка
+        placeholder: Введите имя
+        type: text
+    -
+        label: Пароль
+        name: password
+        placeholder: Введите пароль
+        type: password
+buttons:
+    -
+        type: submit
+        text: Авторизоваться
+
+    -
+        type: submit
+        text: Авторизоваться
+        isSecondary: true
+formTitle: Авторизация
+formId: form
+placeholder: Поиск
+type: search
+name: search
+
+---
+
+{{!< base}}
+
+<div class="demo">
+    <div class="demo__blocks">
+        <div class="demo__title">Список страниц</div>
+        <nav class="demo__nav">
+            <a href="auth.hbs" class="demo__nav-link">Авторизация</a>
+            <a href="registration.hbs" class="demo__nav-link">Регистрация</a>
+            <a href="chat.hbs" class="demo__nav-link">Чат</a>
+            <a href="profile.hbs" class="demo__nav-link">Профиль</a>
+            <a href="500.hbs" class="demo__nav-link">500</a>
+            <a href="400.hbs" class="demo__nav-link">400</a>
+        </nav>
+    </div>
+    <div class="demo__row">
+        <div class="demo__blocks">
+            <div class="demo__title">Инпуты</div>
+            {{#each fields}}
+                {{> input/input}}
+            {{/each}}
+        </div>
+
+        <div class="demo__blocks">
+            <div class="demo__title">Кнопки</div>
+            {{#each buttons}}
+                {{> button/button}}
+            {{/each}}
+        </div>
+
+        <div class="demo__blocks">
+            <div class="demo__title">Форма</div>
+                {{> form/form formId=formId formTitle=formTitle fields=fields buttons=buttons}}
+        </div>
+
+        <div class="demo__blocks">
+            <div class="demo__title">Ошибки</div>
+            {{> error/error  errorCode=500 errorText="Ой, Уже исправляем проблему" text="Вернуться к чатам"}}
+        </div>
+
+        <div class="demo__blocks">
+            <div class="demo__title">Поиск чатов</div>
+            {{> chat/chatSearch/chatSearch placeholder=placeholder type=type name=name}}
+        </div>
+
+        <div class="demo__blocks">
+            <div class="demo__title">Компонент чата</div>
+            {{> chat/chatItem/chatItem chatName="Андрей" messege='Друзья, у меня для вас особенный выпуск новостей!' date=12:30 count=10 }}
+        </div>
+    </div>
+</div>

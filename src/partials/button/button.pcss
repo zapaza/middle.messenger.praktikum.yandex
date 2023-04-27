@@ -1,0 +1,33 @@
+.button {
+    display: block;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: .2s ease-in-out  opacity, filter;
+    padding: 12px;
+
+    &--primary {
+        background: var(--color-accent);
+        font-size: 14px;
+        line-height: 24px;
+        color: var(--color-neutral);
+
+        &:hover {
+            opacity: .9;
+        }
+    }
+
+    &--secondary {
+        background: var(--color-neutral);
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--color-subtext);
+
+        &:hover {
+            filter: brightness(0.95);
+        }
+    }
+}
