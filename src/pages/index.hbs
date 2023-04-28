@@ -80,7 +80,11 @@ name: search
         </div>
         <div class="demo__blocks">
             <div class="demo__title">Шапка открытого чата</div>
-            {{> chat/chatWindow/header/chatWindowHeader }}
+            {{> chat/chatWindow/header/chatWindowHeader chatName="Андрей" }}
+        </div>
+        <div class="demo__blocks">
+            <div class="demo__title">Отправка сообщения</div>
+            {{> chat/chatWindow/messege/chatWindowMessege }}
         </div>
     </div>
 </div>
