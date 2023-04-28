@@ -1,13 +1,13 @@
-<form id="{{ formId }}" class="form">
+<form id="{{ formId }}" class="form flex flex-column gap-32">
     <div class="form__title">{{ formTitle }}</div>
 
-    <div class="form__items">
+    <div class="form__items flex flex-column gap-16">
         {{#each fields}}
             {{> input/input}}
         {{/each}}
     </div>
 
-    <div class="form__buttons">
+    <div class="form__buttons flex flex-column gap-8">
     {{#each buttons}}
         {{> button/button}}
     {{/each}}

@@ -1,12 +1,12 @@
-<div class="chat-item">
-    <div class="chat-item__avatar" {{#if avatar }}style="background-image: url({{avatar}})"{{/if}}></div>
+<div class="chat-item flex gap-8">
+    <div class="chat-item__avatar flex-00a" {{#if avatar }}style="background-image: url({{avatar}})"{{/if}}></div>
 
-    <div class="chat-item__content">
+    <div class="chat-item__content flex-11a">
         <div class="chat-item__title">{{ chatName }}</div>
         <div class="chat-item__message">{{ messege }}</div>
     </div>
 
-    <div class="chat-item__info">
+    <div class="chat-item__info flex-11a">
         <div class="chat-item__date">{{ date }}</div>
         <div class="chat-item__count">{{ count }}</div>
     </div>

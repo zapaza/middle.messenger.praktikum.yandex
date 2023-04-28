@@ -16,6 +16,8 @@
   "homepage": "https://github.com/zapaza/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@parcel/packager-raw-url": "^2.4.0",
+    "@parcel/transformer-webmanifest": "^2.4.0",
     "parcel": "2.4.0",
     "postcss": "8.4.12",
     "postcss-custom-properties": "^13.1.5",

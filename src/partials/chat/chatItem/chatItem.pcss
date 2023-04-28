@@ -1,7 +1,5 @@
 .chat-item {
     padding: 8px 12px;
-    display: flex;
-    gap: 8px;
     background: var(--color-neutral);
     border-bottom: 1px solid var(--color-subtext);
 
@@ -9,13 +7,11 @@
     &__avatar {
         width: 48px;
         height: 48px;
-        flex: 0 0 48px;
         background: var(--color-subtext);
         border-radius: 50%;
     }
 
     &__content {
-        flex: 1 1 100%;
         overflow: hidden;
     }
 
@@ -41,7 +37,6 @@
     }
 
     &__info {
-        flex: 1 1 auto;
         text-align: right;
     }
 

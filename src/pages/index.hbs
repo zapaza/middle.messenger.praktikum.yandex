@@ -75,8 +75,12 @@ name: search
         </div>
 
         <div class="demo__blocks">
-            <div class="demo__title">Компонент чата</div>
+            <div class="demo__title">"Кнопка чата</div>
             {{> chat/chatItem/chatItem chatName="Андрей" messege='Друзья, у меня для вас особенный выпуск новостей!' date=12:30 count=10 }}
+        </div>
+        <div class="demo__blocks">
+            <div class="demo__title">Шапка открытого чата</div>
+            {{> chat/chatWindow/header/chatWindowHeader }}
         </div>
     </div>
 </div>
