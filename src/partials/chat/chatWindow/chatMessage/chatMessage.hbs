@@ -4,7 +4,7 @@
     <div class="chat-message-item__title">{{ autor }}</div>
     <div class="chat-message-item__content">
         {{#if messageType}} 
-            <img srs="{{ messageContent }}" class="chat-message-item__content-image"/>
+            <img src="{{ messageContent }}" class="chat-message-item__content-image" alt="{{ autor }}"/>
         {{else}}
             {{messageContent}}
         {{/if}}
