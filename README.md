@@ -3,6 +3,7 @@
 Практическое задание на курсе "Мидл фронтенд разработчик"
 
 [Дизайн](https://www.figma.com/file/6Ohg5xBagTV4J8MVpYknQr/yandex-chat?t=QU0ArEqMw2354gSL-6)
+[Ссылка на проект](https://melodious-bubblegum-7b87db.netlify.app)
 
 Проект работает на node v14.14.0 (npm v6.14.8)
 
