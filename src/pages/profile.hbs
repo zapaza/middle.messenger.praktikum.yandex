@@ -1,5 +1,55 @@
 ---
 screenTitle: Профиль
+pageStyles: profile
+info:
+    -
+        value: pochta@yandex.ru
+        name: Почта
+    -
+        value: ivanivanov
+        name: Логин
+    -
+        value: Иван
+        name: Имя
+    -
+        value: Иванов
+        name: Фамилия
+    -
+        value: Иван
+        name: Имя в чате
+    -
+        value: +7 (909) 967 30 30
+        name: Телефон
+
+settings:
+    -
+        link: Изменить данные
+    -
+        link: Изменить пароль
+    -
+        exit: true
 ---
 
 {{!< base}}
+
+<main class="profile flex-11a flex flex-jc-center flex-ai-center flex-column">
+    <button class="profile__back flex gap-4">
+        Назад
+    </button>
+
+    <div class="profile__content flex flex-11a flex-jc-center gap-16 flex-ai-center flex-column">
+        <div class="profile__avatar">
+            <img src="../assets/images/empty.png">
+        </div>
+
+        <div class="profile__name">Иван</div>
+
+        <div class="profile__info">
+            {{> profile/profileList/profileList items=info }}
+        </div>
+
+        <div class="profile__info">
+            {{> profile/profileList/profileList items=settings }}
+        </div>
+    </div>
+</main>

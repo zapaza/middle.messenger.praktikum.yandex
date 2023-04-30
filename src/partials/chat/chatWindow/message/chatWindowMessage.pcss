@@ -10,14 +10,29 @@
         background: var(--color-active);
         border-radius: 20px;
         border: none;
+        cursor: pointer;
 
-        &.button-attach {}
+        .button-attach {
+            display: block;
+            width: 23px;
+            height: 23px;
+            background-color: var(--color-neutral);
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-image: url(../../../../assets/icons/clip.svg);
+            mask-image: url(../../../../assets/icons/clip.svg);
+        }
 
-        &.button-send {}
-    }
-
-    &__field {
-
+        .button-send {
+            display: block;
+            width: 23px;
+            height: 23px;
+            background-color: var(--color-neutral);
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-image: url(../../../../assets/icons/arrow-right.svg);
+            mask-image: url(../../../../assets/icons/arrow-right.svg);
+        }
     }
 
     &__label {
