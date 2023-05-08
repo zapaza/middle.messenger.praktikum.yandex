@@ -1,0 +1,32 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "web-messenger",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel build src/pages/**.hbs && node server/server.js",
+    "dev": "parcel src/pages/**/*.hbs --no-cache --port 3000 --open chrome",
+    "build": "parcel build src/pages/**.hbs --no-cache --public-url ./"
+  },
+  "author": "Stanislav Chumakov (Kosmos)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zapaza/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/zapaza/middle.messenger.praktikum.yandex#readme",
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@parcel/packager-raw-url": "2.8.3",
+    "@parcel/transformer-webmanifest": "2.8.3",
+    "parcel": "2.8.3",
+    "postcss": "8.4.23",
+    "postcss-custom-properties": "13.1.5",
+    "postcss-import": "14.1.0",
+    "postcss-nested": "5.0.6",
+    "postcss-url": "10.1.3"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "normalize.css": "8.0.1"
+  }
+}

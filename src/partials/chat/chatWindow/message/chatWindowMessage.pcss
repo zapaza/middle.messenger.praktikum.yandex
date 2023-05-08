@@ -1,0 +1,71 @@
+.chat-message {
+    padding: 16px 12px;
+    width: 100%;
+    max-width: 100%;
+    background: var(--color-primary);
+
+    &__button {
+        width: 32px;
+        height: 32px;
+        background: var(--color-active);
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+
+        .button-attach {
+            display: block;
+            width: 23px;
+            height: 23px;
+            background-color: var(--color-neutral);
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-image: url(../../../../assets/icons/clip.svg);
+            mask-image: url(../../../../assets/icons/clip.svg);
+        }
+
+        .button-send {
+            display: block;
+            width: 23px;
+            height: 23px;
+            background-color: var(--color-neutral);
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-image: url(../../../../assets/icons/arrow-right.svg);
+            mask-image: url(../../../../assets/icons/arrow-right.svg);
+        }
+    }
+
+    &__label {
+        display: grid;
+        width: 100%;
+
+        &:after {
+            width: 100%;
+            content: attr(data-replicated-value);
+            visibility: hidden;
+        }
+    }
+
+    &__textarea {
+        outline: none;
+        resize: none;
+        overflow: hidden;
+        grid-area: 1 / 1 / 2 / 2;
+        background: var(--color-neutral);
+        border-radius: 30px;
+    }
+
+    &__label:after,
+    &__textarea {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--color-subtext);
+        white-space: break-spaces;
+        word-break: break-all;
+        grid-area: 1 / 1 / 2 / 2;
+        display: block;
+        padding: 12px 24px;
+
+    }
+}

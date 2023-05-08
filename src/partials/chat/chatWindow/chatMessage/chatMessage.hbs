@@ -1,0 +1,13 @@
+<div class="chat-message-item 
+        {{#if messageType}}chat-message-item--image{{/if}}
+        {{#if messageIncoming}}chat-message-item--incoming{{/if}} ">
+    <div class="chat-message-item__title">{{ autor }}</div>
+    <div class="chat-message-item__content">
+        {{#if messageType}} 
+            <img src="{{ messageContent }}" class="chat-message-item__content-image" alt="{{ autor }}"/>
+        {{else}}
+            {{messageContent}}
+        {{/if}}
+    </div>
+    <div class="chat-message-item__date">{{ messageDate }}</div>
+</div>

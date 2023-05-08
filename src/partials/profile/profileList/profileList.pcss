@@ -1,0 +1,39 @@
+.profile-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+
+    &__item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 13px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--color-subtext);
+
+        &:last-child {
+            border: none;
+        }
+    }
+
+    .name {
+        color: var(--color-text);
+
+        &--link {
+            color: var(--color-primary);
+            cursor: pointer;
+        }
+
+        &--exit {
+            color: var(--color-error);
+            cursor: pointer;
+        }
+    }
+
+    .value {
+        text-align: right;
+        color: var(--color-subtext);
+    }
+}
