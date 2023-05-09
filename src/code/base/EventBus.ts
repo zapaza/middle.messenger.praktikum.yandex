@@ -1,4 +1,4 @@
-type Callback = (...args: any[]) => void;
+type Callback = (...args: unknown[]) => void;
 
 export class EventBus {
     private events: { [key: string]: Callback[] };
@@ -24,7 +24,7 @@ export class EventBus {
         }
     }
 
-    public emit(event: string, ...args: any[]): void {
+    public emit(event: string, ...args: unknown[]): void {
         if (!this.events[event]) {
             return;
         }
