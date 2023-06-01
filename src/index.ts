@@ -31,7 +31,7 @@ const routes: Record<string, () => void> = {
     },
     '/registration': () => {
         document.title = 'Регистрация';
-        const page = new RegistrationPage({...RegistrationPageMock});
+        const page = new RegistrationPage();
         app.append(page.getContent() as HTMLElement);
         page.dispatchComponentDidMount();
     },
