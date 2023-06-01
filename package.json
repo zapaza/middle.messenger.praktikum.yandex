@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "web-messenger",
   "scripts": {
-    "start": "parcel build ./src/index.html && node server/server.js",
+    "start": "parcel build src/index.html && node server/server.js",
     "dev": "parcel src/index.html --no-cache --port 3000 --open chrome",
     "build": "parcel build src/index.html --no-cache --public-url ./",
     "lint": "eslint . --ext .ts",
