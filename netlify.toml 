@@ -5,6 +5,9 @@
 # “command” is your build command.
 # “publish” is the directory to publish (relative to the root of your repo).
 
+[build]
+  publish = "dist"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
