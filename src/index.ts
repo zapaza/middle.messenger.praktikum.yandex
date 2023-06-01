@@ -7,7 +7,6 @@ import {
     ProfileChangePasswordMock,
     ProfilePageMock,
     ProfileSettingsMock,
-    RegistrationPageMock
 } from "./mock";
 import {  RegistrationPage  } from "./pages/registration/registrationPage";
 import { ProfilePage } from "./pages/profile/profilePage";
