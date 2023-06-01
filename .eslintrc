@@ -1,14 +1,12 @@
 {
-  "root": true,
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+     "project": "./tsconfig.json"
+  },
   "plugins": [
     "@typescript-eslint"
   ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["airbnb", "airbnb-typescript"],
   "rules": {
     "no-param-reassign": 0,
     "no-use-before-define": [
