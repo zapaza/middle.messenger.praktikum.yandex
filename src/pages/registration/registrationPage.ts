@@ -100,14 +100,16 @@ export class RegistrationPage extends Block {
             password2.setProps({
                 events: {
                     change: (event) => {
-                        const errors = validate(VALIDATE_TYPES.REPEAT_PASSWORD, password.props.value, true, event.target.value);
+                        if(event){
+                            const errors = validate(VALIDATE_TYPES.REPEAT_PASSWORD, password!.props.value, true,(event.target! as HTMLInputElement).value);
 
-                        password2.setProps({
-                            value: event.target.value,
-                        });
+                            password2.setProps({
+                                value:(event.target! as HTMLInputElement).value,
+                            });
 
-                        if (errors) {
-                            password2.setProps({errorText: errors});
+                            if (errors) {
+                                password2.setProps({errorText: errors});
+                            }
                         }
                     }
                 }
@@ -119,13 +121,13 @@ export class RegistrationPage extends Block {
                     event.preventDefault();
 
                     console.log({
-                        firstName: firstName.props.value,
-                        secondName: secondName.props.value,
-                        login: login.props.value,
-                        email: email.props.value,
-                        phone: phone.props.value,
-                        password: password.props.value,
-                        password2: password2.props.value,
+                        firstName: firstName?.props.value,
+                        secondName: secondName?.props.value,
+                        login: login?.props.value,
+                        email: email?.props.value,
+                        phone: phone?.props.value,
+                        password: password?.props.value,
+                        password2: password2?.props.value,
                     });
                 }
             }

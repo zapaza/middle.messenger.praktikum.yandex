@@ -7,7 +7,7 @@ import {validate} from "../validation";
 // Нельзя создавать экземпляр данного класса
 export class Block<P extends Record<string, any> = any> {
     public id = nanoid(6);
-    protected props: P;
+    props: P;
     // eslint-disable-next-line no-use-before-define
     public children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
@@ -114,16 +114,17 @@ export class Block<P extends Record<string, any> = any> {
         input.setProps({
             events: {
                 change: (event) => {
-                    const errors = validate(validateType, event.target.value, required);
+                    if (event) {
+                        const errors = validate(validateType, (event.target! as HTMLInputElement).value, required);
 
-                    input.setProps({
-                        value: event.target.value,
-                    });
+                        input.setProps({
+                            value:(event.target! as HTMLInputElement).value,
+                        });
 
-                    if (errors) {
-                        input.setProps({errorText: errors});
+                        if (errors) {
+                            input.setProps({errorText: errors});
+                        }
                     }
-
                 }
             }
         });
