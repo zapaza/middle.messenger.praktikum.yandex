@@ -69,37 +69,43 @@ export const ProfileSettingsMock: IProfileSettingsPageProps = {
                 label: 'E-mail',
                 placeholder: 'Введите e-mail',
                 name: 'email',
-                type: 'email'
+                type: 'email',
+                value: ''
             },
             {
                 label: 'Логин',
                 placeholder: 'Введите логин',
                 name: 'login',
-                type: 'text'
+                type: 'text',
+                value: ''
             },
             {
                 label: 'Имя',
                 placeholder: 'Введите имя',
                 name: 'first_name',
-                type: 'text'
+                type: 'text',
+                value: ''
             },
             {
                 label: 'Фамилия',
                 placeholder: 'Введите фамилию',
                 name: 'second_name',
-                type: 'text'
+                type: 'text',
+                value: ''
             },
             {
                 label: 'Телефон',
                 placeholder: 'Введите номер телефона',
                 name: 'phone',
-                type: 'tel'
+                type: 'tel',
+                value: ''
             },
             {
                 label: 'Аватар',
                 placeholder: 'Выбрать файл',
                 name: 'file',
-                type: 'file'
+                type: 'file',
+                value: ''
             },
         ],
         buttons: [
@@ -129,19 +135,22 @@ export const ProfileChangePasswordMock: IProfileSettingsPageProps = {
                 label: 'Старый пароль',
                 placeholder: 'Введите пароль',
                 name: 'password',
-                type: 'password'
+                type: 'password',
+                value: ''
             },
             {
                 label: 'Новый пароль',
                 placeholder: 'Введите пароль',
                 name: 'password',
-                type: 'password'
+                type: 'password',
+                value: ''
             },
             {
                 label: 'Новый пароль (еще раз)',
                 placeholder: 'Введите пароль',
                 name: 'password2',
-                type: 'password'
+                type: 'password',
+                value: ''
             }
         ],
         buttons: [
@@ -179,6 +188,7 @@ export const ChatPageMock : IChatPage = {
         placeholder: 'Поиск',
         type: 'text',
         name: 'search',
+        value: ''
     },
     chatsList: [
         {
