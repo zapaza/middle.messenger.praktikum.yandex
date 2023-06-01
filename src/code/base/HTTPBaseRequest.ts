@@ -1,25 +1,9 @@
-enum METHOD {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE'
-}
+import {IHTTPBaseRequest, METHOD, RequestOptions} from "../types";
 
-type HttpMethod = keyof typeof METHOD;
-
-interface RequestHeaders {
-  [key: string]: string;
-}
-
-export interface RequestBody {
-  [key: string]: string | number | boolean;
-}
-
-export abstract class HTTPBaseRequest {
+export abstract class HTTPBaseRequest implements IHTTPBaseRequest {
     protected xhr: XMLHttpRequest;
 
-    constructor() {
+    protected constructor() {
         this.xhr = new XMLHttpRequest();
     }
 
@@ -43,27 +27,24 @@ export abstract class HTTPBaseRequest {
         return keyValuePairs.join('&');
     }
 
-    public async sendRequest<T>(
-        method: HttpMethod,
+    public async sendRequest<Response, Data>(
         url: string,
-        headers?: RequestHeaders,
-        data?: RequestBody,
-    ): Promise<T> {
-        if (method === METHOD.GET && data) {
-            const queryString = this.objectToQueryString(data);
+        options: RequestOptions<Data>
+    ): Promise<Response> {
+        if (options.method === METHOD.GET && options.data) {
+            const queryString = this.objectToQueryString(options.data);
             url = `${url}?${queryString}`;
-            data = undefined;
         }
 
-        this.xhr.open(method, url);
+        this.xhr.open(options.method, url);
 
-        if (headers) {
-            for (const key in headers) {
-                this.xhr.setRequestHeader(key, headers[key]);
+        if (options.headers) {
+            for (const key in options.headers) {
+                this.xhr.setRequestHeader(key, options.headers[key]);
             }
         }
 
-        return new Promise<T>((resolve, reject) => {
+        return new Promise<Response>((resolve, reject) => {
             this.xhr.onload = () => {
                 if (this.xhr.status >= 200 && this.xhr.status < 300) {
                     resolve(JSON.parse(this.xhr.response));
@@ -76,52 +57,47 @@ export abstract class HTTPBaseRequest {
                 reject(this.xhr.statusText);
             };
 
-            if (method === METHOD.GET) {
+            if (options.method === METHOD.GET) {
                 this.xhr.send();
             } else {
-                this.xhr.send(data as  Document | XMLHttpRequestBodyInit | null | undefined);
+                this.xhr.send(options.data as Document | XMLHttpRequestBodyInit | null | undefined);
             }
-
         });
     }
 
-    public async get<T>(
+    public async get<Response, Params>(
         url: string,
-        headers?: RequestHeaders,
-        data?: RequestBody,
-    ): Promise<T> {
-        return await this.sendRequest<T>('GET', url, headers, data);
+        options: RequestOptions<Params>
+    ): Promise<Response> {
+        return await this.sendRequest<Response, Params>(url, options);
     }
 
-    public async post<T>(
+    public async post<Response, Body>(
         url: string,
-        headers?: RequestHeaders,
-        data?: RequestBody,
-    ): Promise<T> {
-        return await this.sendRequest<T>('POST', url, headers, data);
+        options: RequestOptions<Body> = { method: METHOD.POST },
+    ): Promise<Response> {
+        return await this.sendRequest<Response, Body>(url, options);
     }
 
-    public async put<T>(
+    public async put<Response, Body>(
         url: string,
-        headers?: RequestHeaders,
-        data?: RequestBody,
-    ): Promise<T> {
-        return await this.sendRequest<T>('PUT', url, headers, data);
+        options: RequestOptions<Body> = { method: METHOD.PUT },
+    ): Promise<Response> {
+        return await this.sendRequest<Response, Body>(url, options);
     }
 
-    public async delete<T>(
+    public async patch<Response, Body>(
         url: string,
-        data?:RequestBody,
-        headers?: RequestHeaders,
-    ): Promise<T> {
-        return await this.sendRequest<T>('DELETE', url, headers, data);
+        options: RequestOptions<Body> = { method: METHOD.PATCH },
+    ): Promise<Response> {
+        return await this.sendRequest<Response, Body>(url, options);
     }
 
-    public async patch<T>(
+    public async delete<Response, Body>(
         url: string,
-        headers?: RequestHeaders,
-        data?: RequestBody,
-    ): Promise<T> {
-        return await this.sendRequest<T>('PATCH', url, headers, data);
+        options: RequestOptions<Body> = { method: METHOD.DELETE },
+    ): Promise<Response> {
+        return await this.sendRequest<Response, Body>(url, options);
     }
+
 }

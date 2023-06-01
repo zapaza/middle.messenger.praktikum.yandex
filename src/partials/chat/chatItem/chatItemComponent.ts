@@ -1,0 +1,14 @@
+import { Block } from "../../../code/base/Block";
+import './chatItem.pcss';
+import template from './chatItem.hbs';
+import { IChatItem } from "../../../code/types";
+
+export class ChatItemComponent extends Block {
+    constructor(props: IChatItem) {
+        super({...props});
+    }
+
+    render() {
+        return this.compile(template, {...this.props});
+    }
+}

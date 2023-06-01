@@ -1,0 +1,26 @@
+<main class="chat flex flex-11a">
+    <aside class="chat__sidebar flex-00a">
+        {{{ chatSearch }}}
+        {{#each chatsList}}
+            {{{ this }}}
+        {{/each}}
+    </aside>
+    <article class="chat__content flex flex-column flex-11a">
+        <div class="chat__content-header flex-00a flex-column flex-jc-center flex-ai-center">
+          {{{ chatHeader }}}
+        </div>
+        <div class="chat__content-body flex flex-11a flex-column flex-ai-end flex-jc-end">
+        {{#if messages}}
+          {{#each messages}}
+            {{{ this }}}
+          {{/each}}
+        {{^}}
+         {{{ error }}}
+        {{/if}}
+        </div>
+
+        <div class="chat__content-footer flex-00a">
+          {{{ chatBottom }}}
+        </div>
+    </article>
+</main>

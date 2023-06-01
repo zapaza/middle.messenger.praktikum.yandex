@@ -3,13 +3,13 @@
 
     <div class="form__items flex flex-column gap-16">
         {{#each fields}}
-            {{> input/input}}
+            {{{ this }}}
         {{/each}}
     </div>
 
     <div class="form__buttons flex flex-column gap-8">
     {{#each buttons}}
-        {{> button/button}}
+        {{{ this }}}
     {{/each}}
     </div>
 </form>

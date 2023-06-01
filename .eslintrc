@@ -20,6 +20,10 @@
         "allowNamedExports": false
       }
     ],
+    "semi": "warn",
+    "no-unused-vars": "warn",
+    "no-unused-labels": "warn",
+    "no-unused-expressions": "warn",
     "no-underscore-dangle": 0,
     "default-param-last": 0,
     "max-len": [

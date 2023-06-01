@@ -1,0 +1,23 @@
+<main class="profile flex-11a flex flex-jc-center flex-ai-center flex-column">
+  <div class="profile__back flex gap-4">
+    {{{ buttonBack }}}
+  </div>
+
+
+    <div class="profile__content flex flex-11a flex-jc-center gap-16 flex-ai-center flex-column">
+
+      <div class="profile__avatar">
+        <img src="{{ avatarUrl }}" alt="{{ avatarAlt }}">
+      </div>
+
+        <div class="profile__name">{{ profileName }}</div>
+
+        <div class="profile__info">
+          {{{ infoBlock }}}
+        </div>
+
+        <div class="profile__info">
+          {{{ settingBlock }}}
+        </div>
+    </div>
+</main>
