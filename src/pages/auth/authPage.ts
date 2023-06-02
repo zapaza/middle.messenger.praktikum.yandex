@@ -3,7 +3,6 @@ import {Block} from "../../code/base/Block";
 import {IButtonProps, IInputProps} from "../../code/types";
 import {FormComponent} from "../../partials/form/formComponent";
 import './auth.pcss';
-import {validate} from "../../code/validation";
 import {VALIDATE_TYPES} from "../../code/dictionary/dictionary";
 
 export class AuthPage extends Block {

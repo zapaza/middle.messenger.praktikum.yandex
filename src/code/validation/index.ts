@@ -34,17 +34,6 @@ function checkingRegExp(value: string | undefined, options?: IValidationOptions,
     return errors;
 }
 
-
-const validationRules = {
-    LOGIN: (value: string, isRequired: boolean) => checkingRegExp(value, { min: 3, max: 20, isRequired: isRequired }, FIELDS_PATTERN.LOGIN),
-    EMAIL: (value: string, isRequired: boolean) => checkingRegExp(value, { isRequired: isRequired }, FIELDS_PATTERN.EMAIL),
-    PHONE_NUMBER: (value: string, isRequired: boolean) => checkingRegExp(value, { min: 10, max:15, isRequired: isRequired }, FIELDS_PATTERN.PHONE),
-    FIRST_NAME: (value: string, isRequired: boolean) => checkingRegExp(value, { isRequired: isRequired }, FIELDS_PATTERN.NAME),
-    SECOND_NAME: (value: string, isRequired: boolean) => checkingRegExp(value, { isRequired: isRequired }, FIELDS_PATTERN.NAME),
-    PASSWORD: (value: string, isRequired: boolean) => checkingRegExp(value, { min: 8, max: 40, isRequired: isRequired}, FIELDS_PATTERN.PASSWORD),
-    REPEAT_PASSWORD: (value: string, isRequired: boolean, repeatValue: string,) => checkingRegExp(value, {repeatedValue: repeatValue, isRequired: isRequired}),
-    MESSAGE: (value: string) => checkingRegExp(value),
-};
 export function validate(type: VALIDATE_TYPES, value: string, isRequired =  false,  repeatValue?: string) {
 
     if (type === VALIDATE_TYPES.LOGIN) {
