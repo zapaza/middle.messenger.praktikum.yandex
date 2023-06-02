@@ -11,10 +11,6 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
-
-    "lib": [
-      "ESNext",
-      "DOM",
-    ]
+    "lib": ["ESNext", "DOM"],
   }
 }
