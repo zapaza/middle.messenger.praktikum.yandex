@@ -73,6 +73,13 @@ export const ProfileSettingsMock: IProfileSettingsPageProps = {
                 value: ''
             },
             {
+                label: 'Отображаемое имя',
+                placeholder: 'Введите имя',
+                name: 'display_name',
+                type: 'text',
+                value: ''
+            },
+            {
                 label: 'Логин',
                 placeholder: 'Введите логин',
                 name: 'login',
