@@ -19,8 +19,7 @@
             background-color: var(--color-neutral);
             mask-repeat: no-repeat;
             mask-position: center;
-            -webkit-mask-image: url(../../../../assets/icons/clip.svg);
-            mask-image: url(../../../../assets/icons/clip.svg);
+            mask-image: url('../../../../assets/icons/clip.svg');
         }
 
         .button-send {
@@ -30,8 +29,7 @@
             background-color: var(--color-neutral);
             mask-repeat: no-repeat;
             mask-position: center;
-            -webkit-mask-image: url(../../../../assets/icons/arrow-right.svg);
-            mask-image: url(../../../../assets/icons/arrow-right.svg);
+            mask-image: url('../../../../assets/icons/arrow-right.svg');
         }
     }
 
@@ -39,7 +37,7 @@
         display: grid;
         width: 100%;
 
-        &:after {
+        &::after {
             width: 100%;
             content: attr(data-replicated-value);
             visibility: hidden;
@@ -55,7 +53,7 @@
         border-radius: 30px;
     }
 
-    &__label:after,
+    &__label::after,
     &__textarea {
         font-weight: 500;
         font-size: 12px;

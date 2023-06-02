@@ -1,15 +1,18 @@
-@import "../partials/chat/chatSearch/chatSearch.pcss";
-@import "../partials/chat/chatItem/chatItem.pcss";
-@import "../partials/chat/chatWindow/header/chatWindowHeader.pcss";
-@import "../partials/chat/chatWindow/message/chatWindowMessage.pcss";
-@import "../partials/chat/chatWindow/chatMessage/chatMessage.pcss";
-
 .demo {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1 1 100%;
+
+    &-blocks {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        align-items: center;
+        padding: 12px;
+        gap: 12px;
+    }
 
     &__row {
         display: flex;
@@ -18,18 +21,9 @@
         gap: 12px;
         flex-wrap: wrap;
 
-        .demo__blocks {
+        .demo-blocks {
             flex: 0 1 calc(25% - 12px);
         }
-    }
-
-    &__blocks {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 24px;
-        align-items: center;
-        padding: 12px;
-        gap: 12px;
     }
 
     &__title {
@@ -39,8 +33,16 @@
     }
 
     &__nav {
-        display: flex;
-        column-gap: 8px;
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            padding: 0;
+            margin: 0;
+        }
     }
 
     &__nav-link {

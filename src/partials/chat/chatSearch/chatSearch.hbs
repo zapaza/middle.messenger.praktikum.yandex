@@ -1,8 +1,8 @@
 <div class="chat-search flex flex-column gap-16">
     <div class="chat-search__top">
-        <button type="button" class="chat-search__settings flex flex-ai-end gap-6">Настройки</button>
+      <a href="/profile" class="chat-search__settings flex flex-ai-end gap-6">Настройки</a>
     </div>
     <div class="chat-search__bottom">
-        {{> input/input placeholder=placeholder type=type name=name }}
+        {{{ searchInput }}}
     </div>
 </div>

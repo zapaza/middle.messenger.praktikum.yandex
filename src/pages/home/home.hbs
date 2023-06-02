@@ -1,0 +1,12 @@
+<div class="demo">
+    <div class="demo__blocks">
+        <div class="demo__title">Список страниц</div>
+        <nav class="demo__nav">
+          <ul class="flex gap-8">
+            {{#each pages}}
+            <li><a href="{{ this.link }}" class="demo__nav-link">{{ this.label }}</a></li>
+            {{/each}}
+          </ul>
+        </nav>
+    </div>
+</div>

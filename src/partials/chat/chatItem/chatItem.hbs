@@ -8,6 +8,6 @@
 
     <div class="chat-item__info flex-11a">
         <div class="chat-item__date">{{ date }}</div>
-        <div class="chat-item__count">{{ count }}</div>
+        {{#if count}} <div class="chat-item__count">{{ count }}</div>{{/if}}
     </div>
 </div>
