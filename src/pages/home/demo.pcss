@@ -5,6 +5,15 @@
     align-items: center;
     flex: 1 1 100%;
 
+    &__blocks {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        align-items: center;
+        padding: 12px;
+        gap: 12px;
+    }
+
     &__row {
         display: flex;
         align-content: flex-start;
@@ -15,15 +24,6 @@
         .demo__blocks {
             flex: 0 1 calc(25% - 12px);
         }
-    }
-
-    &__blocks {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 24px;
-        align-items: center;
-        padding: 12px;
-        gap: 12px;
     }
 
     &__title {
