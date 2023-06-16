@@ -156,3 +156,13 @@ export type PlainObject<T = any> = {
 };
 
 export type StringIndexed = Record<string, any>;
+
+export type TState = Record<string, any>;
+
+export type TProps = Record<string, any>;
+
+export type TAccess = 'public' | 'protected' | '';
+
+export interface IRouterParams {
+  [key: string]: number | null
+}

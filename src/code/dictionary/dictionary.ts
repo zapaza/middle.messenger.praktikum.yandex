@@ -5,6 +5,13 @@ export enum BLOCK_EVENT {
   FLOW_RENDER = 'flow:render'
 }
 
+export enum STORE_EVENTS {
+  INIT = 'store:init',
+  STORE_DM = 'store:did-mount',
+  STORE_DU = 'store:did-update',
+  USE = 'store:use',
+}
+
 export enum FIELDS_PATTERN {
   EMAIL = '^[a-zA-Z\\d\\-_]+@[a-zA-Z]+\\.[a-zA-Z]+$',
   LOGIN = '^(?!\\d+$)[a-zA-Z\\d_-]{3,20}$',

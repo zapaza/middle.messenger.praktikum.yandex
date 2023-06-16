@@ -1,5 +1,5 @@
-import {PlainObject} from "../code/types";
-import {isArrayOrObject} from "./isArray";
+import { PlainObject } from "../code/types";
+import { isArrayOrObject } from "./isArray";
 
 export function isEqual(lhs: PlainObject, rhs: PlainObject) {
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {

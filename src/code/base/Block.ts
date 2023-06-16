@@ -1,8 +1,10 @@
-import { EventBus } from './EventBus';
-import { nanoid } from 'nanoid';
-import {BLOCK_EVENT, VALIDATE_TYPES} from "../dictionary/dictionary";
-import {IInputProps} from "../types";
-import {validate} from "../validation";
+import {EventBus} from './EventBus';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {nanoid} from 'nanoid';
+import {BLOCK_EVENT, VALIDATE_TYPES} from '../dictionary/dictionary';
+import {IInputProps} from '../types';
+import {validate} from '../validation';
 
 // Нельзя создавать экземпляр данного класса
 export class Block<P extends Record<string, any> = any> {
@@ -14,9 +16,9 @@ export class Block<P extends Record<string, any> = any> {
     private _element: HTMLElement | null = null;
 
     /** JSDoc
-     *
-     * @returns {void}
-     */
+   *
+   * @returns {void}
+   */
     constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
 
@@ -40,7 +42,7 @@ export class Block<P extends Record<string, any> = any> {
         }
 
         Object.entries(events).forEach(([event, listener]) => {
-            this._element!.removeEventListener(event, listener);
+      this._element!.removeEventListener(event, listener);
         });
     }
 
@@ -69,6 +71,10 @@ export class Block<P extends Record<string, any> = any> {
         });
     }
 
+    private _createResources() {
+        this._element = this._createDocumentElement('div');
+    }
+
     _registerEvents(eventBus: EventBus) {
         eventBus.on(BLOCK_EVENT.INIT, this._init.bind(this));
         eventBus.on(BLOCK_EVENT.FLOW_CDM, this._componentDidMount.bind(this));
@@ -78,6 +84,7 @@ export class Block<P extends Record<string, any> = any> {
 
     private _init() {
         this.init();
+        this._createResources();
 
         this.eventBus().emit(BLOCK_EVENT.FLOW_RENDER);
     }
@@ -118,7 +125,7 @@ export class Block<P extends Record<string, any> = any> {
                         const errors = validate(validateType, (event.target! as HTMLInputElement).value, required);
 
                         input.setProps({
-                            value:(event.target! as HTMLInputElement).value,
+                            value: (event.target! as HTMLInputElement).value,
                         });
 
                         if (errors) {
@@ -217,7 +224,7 @@ export class Block<P extends Record<string, any> = any> {
 
     _makePropsProxy(props: P) {
     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
 
         return new Proxy(props, {
@@ -239,5 +246,42 @@ export class Block<P extends Record<string, any> = any> {
                 throw new Error('Нет доступа');
             }
         });
+    }
+
+    private _createDocumentElement(tagName: string) {
+    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+        const element = document.createElement(tagName);
+        return element;
+    }
+
+    public show(force = false) {
+        if (force) {
+      this.getContent()!.classList.add('route-active');
+        } else {
+            if (this.getContent()) {
+        this.getContent()!.classList.add('route-hidden');
+
+        setTimeout(() => {
+          this.getContent()!.classList.remove('route-hidden');
+          this.getContent()!.classList.add('route-active');
+        }, 200);
+            }
+        }
+    }
+
+    public hide() {
+    this.getContent()!.classList.remove('route-active');
+    this.getContent()!.classList.add('route-hidden');
+    }
+
+    public destroy() {
+        if (this._element) {
+            this._element.remove();
+            this.onDestroy();
+        }
+    }
+
+    public onDestroy() {
+        return;
     }
 }
