@@ -1,10 +1,10 @@
-import {EventBus} from './EventBus';
+import { EventBus } from './EventBus';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import {nanoid} from 'nanoid';
-import {BLOCK_EVENT, VALIDATE_TYPES} from '../dictionary/dictionary';
-import {IInputProps} from '../types';
-import {validate} from '../validation';
+import { nanoid } from 'nanoid';
+import { BLOCK_EVENT, VALIDATE_TYPES } from '../dictionary/dictionary';
+import { IInputProps } from '../types';
+import { validate } from '../validation';
 
 // Нельзя создавать экземпляр данного класса
 export class Block<P extends Record<string, any> = any> {
