@@ -135,7 +135,6 @@ export interface IChatItem {
   count? : number;
 }
 
-
 export interface IChatPage {
   chatSearch: IInputProps;
   chatsList: IChatItem[];
@@ -145,10 +144,15 @@ export interface IChatPage {
   chatBottom: IChatWindowMessage;
 }
 
-
 export interface IValidationOptions {
   isRequired: boolean;
   repeatedValue?: string;
   min?: number;
   max?: number;
 }
+
+export type PlainObject<T = any> = {
+  [k: string]: T;
+};
+
+export type StringIndexed = Record<string, any>;
