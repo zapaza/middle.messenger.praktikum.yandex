@@ -1,10 +1,15 @@
 <ul class="profile-list">
     {{#each items}}
     <li class="profile-list__item flex flex-ai-center gap-12 flex-jc-sb">
-        {{#if name}}<div class="name flex-00a">{{name}}</div>{{/if}}
+        {{#if name}}
+          {{#if link }}
+            <a href="{{ link }}" class="name name--link flex-00a">{{ name }}</a>
+          {{else}}
+            <div class="name flex-00a">{{name}}</div>
+          {{/if}}
+        {{/if}}
         {{#if value}}<div class="value flex-11a">{{value}}</div>{{/if}}
-        {{#if link}}<div class="name name--link flex-00a">{{link}}</div>{{/if}}
-        {{#if isExit}}<div class="name name--exit flex-00a">Выйти</div>{{/if}}
     </li>
     {{/each}}
+  <li class="profile-list__item flex flex-ai-center gap-12 flex-jc-sb"> {{{ exitButton }}} </li>
 </ul>

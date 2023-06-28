@@ -1,14 +1,14 @@
-import { Block } from "../../../code/base/Block";
+import {Block} from '../../../code/base/Block';
 import './chatItem.pcss';
 import template from './chatItem.hbs';
-import { IChatItem } from "../../../code/types";
+import {IChatItemComponent} from '../../../code/types';
 
 export class ChatItemComponent extends Block {
-    constructor(props: IChatItem) {
-        super({...props});
-    }
+  constructor(props: IChatItemComponent) {
+    super({...props});
+  }
 
-    render() {
-        return this.compile(template, {...this.props});
-    }
+  render() {
+    return this.compile(template, {...this.props});
+  }
 }

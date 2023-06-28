@@ -1,13 +1,13 @@
-import { Block } from "./Block";
+import {Block} from './Block';
 
 export default function renderDOM(block: Block) {
-    document.title = 'Изменение пароля';
-    const root = document.querySelector('#root');
+  document.title = 'Изменение пароля';
+  const root = document.querySelector('#app');
 
-    if (!root) {
-        return;
-    }
+  if (!root) {
+    return;
+  }
 
-    root.append(block.getContent() as HTMLElement);
-    block.dispatchComponentDidMount();
+  root.append(block.getContent() as HTMLElement);
+  block.dispatchComponentDidMount();
 }

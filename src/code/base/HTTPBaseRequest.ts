@@ -1,103 +1,114 @@
 import {IHTTPBaseRequest, METHOD, RequestOptions} from "../types";
+import {queryStringify} from "../../utils";
 
-export abstract class HTTPBaseRequest implements IHTTPBaseRequest {
-    protected xhr: XMLHttpRequest;
+export class HTTPBaseRequest implements IHTTPBaseRequest {
+  protected xhr: XMLHttpRequest;
 
-    protected constructor() {
-        this.xhr = new XMLHttpRequest();
+  constructor() {
+    this.xhr = new XMLHttpRequest();
+  }
+
+  public async sendRequest<T>(
+    url: string,
+    options: RequestOptions
+  ):Promise<T>  {
+    // eslint-disable-next-line prefer-const
+    let { headers = {}, method, data } = options;
+
+    if (Object.keys(headers).length == 0 && !(data instanceof FormData)) {
+      headers = {'Content-type': 'application/json; charset=UTF-8'};
     }
 
-    protected objectToQueryString(obj: Record<string, string | number | boolean>): string {
-        const keyValuePairs = [];
+    return new Promise((resolve, reject) => {
+      if (!method) {
+        reject(new Error('No method'));
+        return;
+      }
 
-        for (const key in obj) {
-            const value = obj[key];
+      const xhr = new window.XMLHttpRequest();
+      const isGet = method === METHOD.GET;
 
-            if (value !== null && value !== undefined) {
-                if (Array.isArray(value)) {
-                    for (const item of value) {
-                        keyValuePairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(item)}`);
-                    }
-                } else {
-                    keyValuePairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-                }
-            }
+      xhr.withCredentials = true;
+
+      xhr.open(
+        method,
+        isGet && !!data
+          ? `${url}${queryStringify(data as object)}`
+          : url,
+      );
+
+      Object.keys(headers).forEach((key) => {
+        xhr.setRequestHeader(key, headers[key]);
+      });
+
+      xhr.onload = function () {
+        let resp: any = '';
+
+        if (xhr.response === 'OK') {
+          resp = { status: 'OK' };
+        } else {
+          resp = JSON.parse(xhr.response);
         }
 
-        return keyValuePairs.join('&');
-    }
-
-    public async sendRequest<Response, Data>(
-        url: string,
-        options: RequestOptions<Data>
-    ): Promise<Response> {
-        if (options.method === METHOD.GET && options.data) {
-            const queryString = this.objectToQueryString(options.data);
-            url = `${url}?${queryString}`;
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(resp);
+        } else {
+          reject(resp);
         }
 
-        this.xhr.open(options.method, url);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        resolve(xhr);
+      };
 
-        if (options.headers) {
-            for (const key in options.headers) {
-                this.xhr.setRequestHeader(key, options.headers[key]);
-            }
-        }
+      xhr.onabort = reject;
+      xhr.onerror = reject;
 
-        return new Promise<Response>((resolve, reject) => {
-            this.xhr.onload = () => {
-                if (this.xhr.status >= 200 && this.xhr.status < 300) {
-                    resolve(JSON.parse(this.xhr.response));
-                } else {
-                    reject(this.xhr.statusText);
-                }
-            };
+      xhr.ontimeout = reject;
 
-            this.xhr.onerror = () => {
-                reject(this.xhr.statusText);
-            };
+      if (isGet || !data) {
+        xhr.send();
+      } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        xhr.send(data);
+      }
+    });
+  }
 
-            if (options.method === METHOD.GET) {
-                this.xhr.send();
-            } else {
-                this.xhr.send(options.data as Document | XMLHttpRequestBodyInit | null | undefined);
-            }
-        });
-    }
+  public async get<T>(
+    url: string,
+    options?: RequestOptions
+  ):Promise<T> {
+    return await this.sendRequest<T>(url, {...options, method: METHOD.GET });
+  }
 
-    public async get<Response, Params>(
-        url: string,
-        options: RequestOptions<Params>
-    ): Promise<Response> {
-        return await this.sendRequest<Response, Params>(url, options);
-    }
+  public async post<T>(
+    url: string,
+    options?: RequestOptions,
+  ):Promise<T> {
+    return await this.sendRequest(url, {...options, method: METHOD.POST});
+  }
 
-    public async post<Response, Body>(
-        url: string,
-        options: RequestOptions<Body> = { method: METHOD.POST },
-    ): Promise<Response> {
-        return await this.sendRequest<Response, Body>(url, options);
-    }
+  public async put<T>(
+    url: string,
+    options: RequestOptions,
+  ):Promise<T> {
+    return await this.sendRequest(url, {...options, method: METHOD.PUT});
+  }
 
-    public async put<Response, Body>(
-        url: string,
-        options: RequestOptions<Body> = { method: METHOD.PUT },
-    ): Promise<Response> {
-        return await this.sendRequest<Response, Body>(url, options);
-    }
+  public async patch<T>(
+    url: string,
+    options: RequestOptions,
+  ):Promise<T>{
+    return await this.sendRequest(url, {...options, method: METHOD.PATCH});
+  }
 
-    public async patch<Response, Body>(
-        url: string,
-        options: RequestOptions<Body> = { method: METHOD.PATCH },
-    ): Promise<Response> {
-        return await this.sendRequest<Response, Body>(url, options);
-    }
-
-    public async delete<Response, Body>(
-        url: string,
-        options: RequestOptions<Body> = { method: METHOD.DELETE },
-    ): Promise<Response> {
-        return await this.sendRequest<Response, Body>(url, options);
-    }
+  public async delete<T>(
+    url: string,
+    options: RequestOptions,
+  ):Promise<T> {
+    return await this.sendRequest(url, {...options, method: METHOD.DELETE});
+  }
 
 }

@@ -4,33 +4,8 @@
     max-width: 100%;
     background: var(--color-primary);
 
-    &__button {
-        width: 32px;
-        height: 32px;
-        background: var(--color-active);
-        border-radius: 20px;
-        border: none;
-        cursor: pointer;
-
-        .button-attach {
-            display: block;
-            width: 23px;
-            height: 23px;
-            background-color: var(--color-neutral);
-            mask-repeat: no-repeat;
-            mask-position: center;
-            mask-image: url('../../../../assets/icons/clip.svg');
-        }
-
-        .button-send {
-            display: block;
-            width: 23px;
-            height: 23px;
-            background-color: var(--color-neutral);
-            mask-repeat: no-repeat;
-            mask-position: center;
-            mask-image: url('../../../../assets/icons/arrow-right.svg');
-        }
+    .button-rounded {
+        flex: 0 0 24px;
     }
 
     &__label {
@@ -65,5 +40,9 @@
         display: block;
         padding: 12px 24px;
 
+    }
+
+    &__field {
+        flex: 1 1 100%;
     }
 }

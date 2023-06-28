@@ -4,145 +4,143 @@ import {IButtonProps, IInputProps} from "../../code/types";
 import {FormComponent} from "../../partials/form/formComponent";
 import '../auth/auth.pcss';
 import {VALIDATE_TYPES} from "../../code/dictionary/dictionary";
-import {validate} from "../../code/validation";
+import {validate, validateForm} from "../../utils/validation";
+import {collectingFormFields} from "../../utils/collectingFormFields";
+import {ISingUpBody} from "../../code/services/AuthServices/types";
+import services from "../../code/services";
 
 export class RegistrationPage extends Block {
-    constructor() {
-        super({});
-    }
+  constructor() {
+    super({});
+  }
 
-    protected init() {
-        this.children.form = new FormComponent({
-            formTitle: 'Регистрация',
-            formId: 'registration',
-            fields: [
-                {
-                    label: 'Имя',
-                    placeholder: 'Введите имя',
-                    name: 'first_name',
-                    type: 'text',
-                    value: '',
-                },
-                {
-                    label: 'Фамилия',
-                    placeholder: 'Введите фамилию',
-                    name: 'second_name',
-                    type: 'text',
-                    value: '',
-                },
-                {
-                    label: 'Логин',
-                    placeholder: 'Введите логин',
-                    name: 'login',
-                    type: 'text',
-                    value: '',
-                },
-                {
-                    label: 'E-mail',
-                    placeholder: 'Введите e-mail',
-                    name: 'email',
-                    type: 'email',
-                    value: '',
-                },
-                {
-                    label: 'Телефон',
-                    placeholder: 'Введите номер телефона',
-                    name: 'phone',
-                    type: 'tel',
-                    value: '',
-                },
-                {
-                    label: 'Пароль',
-                    placeholder: 'Введите пароль',
-                    name: 'password',
-                    type: 'password',
-                    value: '',
-                },
-                {
-                    label: 'Пароль (еще раз)',
-                    placeholder: 'Введите пароль',
-                    name: 'password2',
-                    type: 'password',
-                    value: '',
-                }
-            ],
-            buttons: [
-                {
-                    type: 'submit',
-                    text: "Зарегистрироваться",
-                },
-                {
-                    type: "button",
-                    isSecondary: true,
-                    text: "Авторизоваться",
-                }
-            ],
-        });
-
-        const formChildren = this.children.form.children;
-        const firstName = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'first_name');
-        const secondName = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'second_name');
-        const login = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'login');
-        const email = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'email');
-        const phone = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'phone');
-        const password = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'password');
-        const password2 = (formChildren.fields as Block<IInputProps>[]).find((el) => el?.props.name == 'password2');
-        const buttonSend = (formChildren.buttons as Block<IButtonProps>[])[0];
-        const buttonCancel = (formChildren.buttons as Block<IButtonProps>[])[1];
-
-        this.inputSetProps(firstName, VALIDATE_TYPES.FIRST_NAME, true);
-        this.inputSetProps(secondName, VALIDATE_TYPES.SECOND_NAME, true);
-        this.inputSetProps(login, VALIDATE_TYPES.LOGIN, true);
-        this.inputSetProps(email, VALIDATE_TYPES.EMAIL, true);
-        this.inputSetProps(phone, VALIDATE_TYPES.PHONE_NUMBER, true);
-        this.inputSetProps(password, VALIDATE_TYPES.PASSWORD, true);
-        if (password2) {
-            password2.setProps({
-                events: {
-                    change: (event) => {
-                        if(event){
-                            const errors = validate(VALIDATE_TYPES.REPEAT_PASSWORD, password!.props.value, true,(event.target! as HTMLInputElement).value);
-
-                            password2.setProps({
-                                value:(event.target! as HTMLInputElement).value,
-                            });
-
-                            if (errors) {
-                                password2.setProps({errorText: errors});
-                            }
-                        }
-                    }
-                }
-            });
+  componentDidMount() {
+    this.children.form = new FormComponent({
+      formTitle: 'Регистрация',
+      formId: 'registration',
+      fields: [
+        {
+          label: 'Имя',
+          placeholder: 'Введите имя',
+          name: 'first_name',
+          type: 'text',
+          required: true,
+          validateType: VALIDATE_TYPES.first_name
+        },
+        {
+          label: 'Фамилия',
+          placeholder: 'Введите фамилию',
+          name: 'second_name',
+          type: 'text',
+          required: true,
+          validateType: VALIDATE_TYPES.second_name
+        },
+        {
+          label: 'Логин',
+          placeholder: 'Введите логин',
+          name: 'login',
+          type: 'text',
+          required: true,
+          validateType: VALIDATE_TYPES.login,
+          rule: 'от 3 до 20 символов, латиница, может содержать цифры',
+        },
+        {
+          label: 'E-mail',
+          placeholder: 'Введите e-mail',
+          name: 'email',
+          type: 'email',
+          required: true,
+          validateType: VALIDATE_TYPES.email,
+        },
+        {
+          label: 'Телефон',
+          placeholder: 'Введите номер телефона',
+          name: 'phone',
+          type: 'tel',
+          required: true,
+          validateType: VALIDATE_TYPES.phone,
+        },
+        {
+          label: 'Пароль',
+          placeholder: 'Введите пароль',
+          name: 'password',
+          type: 'password',
+          required: true,
+          validateType: VALIDATE_TYPES.password,
+          rule: 'от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.',
+        },
+      ],
+      buttons: [
+        {
+          type: 'submit',
+          text: "Зарегистрироваться",
+          disabled: true,
+        },
+        {
+          type: "button",
+          isSecondary: true,
+          text: "Авторизоваться",
         }
-        buttonSend.setProps({
-            events: {
-                click: (event) => {
-                    event.preventDefault();
+      ],
+    });
 
-                    console.log({
-                        firstName: firstName?.props.value,
-                        secondName: secondName?.props.value,
-                        login: login?.props.value,
-                        email: email?.props.value,
-                        phone: phone?.props.value,
-                        password: password?.props.value,
-                        password2: password2?.props.value,
-                    });
-                }
+    const formChildren = this.children.form.children;
+    const buttonSend = (formChildren.buttons as Block<IButtonProps>[])[0];
+    const buttonCancel = (formChildren.buttons as Block<IButtonProps>[])[1];
+
+    (formChildren.fields as Block<IInputProps>[]).forEach((el) => {
+      el.setProps({
+        events: {
+          change: (event) => {
+            if (event) {
+              const errors = validate(
+                                el.props.validateType as VALIDATE_TYPES,
+                                (event.target! as HTMLInputElement).value,
+                                el.props.required,
+              );
+
+              el.setProps({
+                value: (event.target! as HTMLInputElement).value,
+                errorText: errors
+              });
             }
-        });
+          },
+        }
+      });
+    });
 
-        buttonCancel.setProps({
-            events: {
-                click: () => window.location.pathname = '/auth',
-            }
-        });
+    this.children.form.setProps({
+      events: {
+        change: () => {
+          const isValidForm = validateForm(formChildren.fields as Block<IInputProps>[]);
+
+          buttonSend.setProps({
+            disabled: isValidForm,
+          });
+        },
+        submit: async (event: Event) => {
+          if (event) {
+            event.preventDefault();
+            const target = event.target as HTMLFormElement;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const data = collectingFormFields([...target]);
+            await services.authServices.singUp(data as ISingUpBody);
+          }
+        },
+      }
+    });
+
+    buttonCancel.setProps({
+      events: {
+        click: () => window.location.pathname = '/login',
+      }
+    });
 
 
-    }
+  }
 
-    protected render(): DocumentFragment {
-        return this.compile(template, {...this.props});
-    }
+  protected render(): DocumentFragment {
+    return this.compile(template, {...this.props});
+  }
 }

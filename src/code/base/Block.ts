@@ -1,287 +1,266 @@
-import { EventBus } from './EventBus';
+import {EventBus} from './EventBus';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { nanoid } from 'nanoid';
-import { BLOCK_EVENT, VALIDATE_TYPES } from '../dictionary/dictionary';
-import { IInputProps } from '../types';
-import { validate } from '../validation';
+import {nanoid} from 'nanoid';
+import {BLOCK_EVENT} from '../dictionary/dictionary';
 
 // Нельзя создавать экземпляр данного класса
 export class Block<P extends Record<string, any> = any> {
-    public id = nanoid(6);
-    props: P;
-    // eslint-disable-next-line no-use-before-define
-    public children: Record<string, Block | Block[]>;
-    private eventBus: () => EventBus;
-    private _element: HTMLElement | null = null;
+  public id = nanoid(6);
+  props: P;
+  // eslint-disable-next-line no-use-before-define
+  public children: Record<string, Block | Block[]>;
+  private eventBus: () => EventBus;
+  private _element: HTMLElement | null = null;
 
-    /** JSDoc
+  /** JSDoc
    *
    * @returns {void}
    */
-    constructor(propsWithChildren: P) {
-        const eventBus = new EventBus();
+  constructor(propsWithChildren: P) {
+    const eventBus = new EventBus();
 
-        const {props, children} = this._getChildrenAndProps(propsWithChildren);
+    const {props, children} = this._getChildrenAndProps(propsWithChildren);
 
-        this.children = children;
-        this.props = this._makePropsProxy(props);
+    this.children = children;
+    this.props = this._makePropsProxy(props);
 
-        this.eventBus = () => eventBus;
+    this.eventBus = () => eventBus;
 
-        this._registerEvents(eventBus);
+    this._registerEvents(eventBus);
 
-        eventBus.emit(BLOCK_EVENT.INIT);
+    eventBus.emit(BLOCK_EVENT.INIT);
+  }
+
+  _removeEvents() {
+    const events: Record<string, () => void> = (this.props as any).events;
+
+    if (!events || !this._element) {
+      return;
     }
 
-    _removeEvents() {
-        const events: Record<string, () => void> = (this.props as any).events;
-
-        if (!events || !this._element) {
-            return;
-        }
-
-        Object.entries(events).forEach(([event, listener]) => {
+    Object.entries(events).forEach(([event, listener]) => {
       this._element!.removeEventListener(event, listener);
-        });
+    });
+  }
+
+  _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
+    const props: Record<string, unknown> = {};
+    const children: Record<string, Block | Block[]> = {};
+
+    Object.entries(childrenAndProps).forEach(([key, value]) => {
+      if (Array.isArray(value) && value.every(v => v instanceof Block)) {
+        children[key as string] = value;
+      } else if (value instanceof Block) {
+        children[key as string] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+
+    return {props: props as P, children};
+  }
+
+  _addEvents() {
+    const {events = {}} = this.props as P & { events: Record<string, () => void> };
+
+    Object.keys(events).forEach(eventName => {
+      this._element?.addEventListener(eventName, events[eventName]);
+    });
+  }
+
+  private _createResources() {
+    this._element = this._createDocumentElement('div');
+  }
+
+  _registerEvents(eventBus: EventBus) {
+    eventBus.on(BLOCK_EVENT.INIT, this._init.bind(this));
+    eventBus.on(BLOCK_EVENT.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(BLOCK_EVENT.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(BLOCK_EVENT.FLOW_RENDER, this._render.bind(this));
+  }
+
+  private _init() {
+    this._createResources();
+    this.eventBus().emit(BLOCK_EVENT.FLOW_CDM);
+
+    this.init();
+
+    // this.eventBus().emit(BLOCK_EVENT.FLOW_CDM);
+  }
+
+  protected init() {
+
+    return;
+  }
+
+  _componentDidMount() {
+    this.componentDidMount();
+    this.eventBus().emit(BLOCK_EVENT.FLOW_RENDER);
+  }
+
+  componentDidMount() {
+    return;
+  }
+
+  public dispatchComponentDidMount() {
+    this.eventBus().emit(BLOCK_EVENT.FLOW_CDM);
+
+    Object.values(this.children).forEach(child => {
+      if (Array.isArray(child)) {
+        child.forEach(ch => ch.dispatchComponentDidMount());
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
+  }
+
+  private _componentDidUpdate(oldProps: P, newProps: P) {
+    if (this.componentDidUpdate(oldProps, newProps)) {
+      this.eventBus().emit(BLOCK_EVENT.FLOW_RENDER);
+    }
+    this._render();
+  }
+
+  componentDidUpdate(_oldProps: P, _newProps: P) {
+    return true;
+  }
+
+  setProps = (nextProps: Partial<P>) => {
+    if (!nextProps) {
+      return;
     }
 
-    _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
-        const props: Record<string, unknown> = {};
-        const children: Record<string, Block | Block[]> = {};
+    Object.assign(this.props, nextProps);
+  };
 
-        Object.entries(childrenAndProps).forEach(([key, value]) => {
-            if (Array.isArray(value) && value.every(v => v instanceof Block)) {
-                children[key as string] = value;
-            } else if (value instanceof Block) {
-                children[key as string] = value;
-            } else {
-                props[key] = value;
-            }
-        });
+  get element() {
+    return this._element;
+  }
 
-        return {props: props as P, children};
+  private _render() {
+    const fragment = this.render();
+    this._removeEvents();
+
+    const newElement = fragment.firstElementChild as HTMLElement;
+
+    if (this._element && newElement) {
+      this._element.replaceWith(newElement);
     }
 
-    _addEvents() {
-        const {events = {}} = this.props as P & { events: Record<string, () => void> };
+    this._element = newElement;
 
-        Object.keys(events).forEach(eventName => {
-            this._element?.addEventListener(eventName, events[eventName]);
-        });
-    }
+    this._addEvents();
+  }
 
-    private _createResources() {
-        this._element = this._createDocumentElement('div');
-    }
+  protected compile(template: (context: any) => string, context: any) {
+    const contextAndStubs = {...context};
 
-    _registerEvents(eventBus: EventBus) {
-        eventBus.on(BLOCK_EVENT.INIT, this._init.bind(this));
-        eventBus.on(BLOCK_EVENT.FLOW_CDM, this._componentDidMount.bind(this));
-        eventBus.on(BLOCK_EVENT.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(BLOCK_EVENT.FLOW_RENDER, this._render.bind(this));
-    }
+    Object.entries(this.children).forEach(([name, component]) => {
+      if (Array.isArray(component)) {
+        contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`);
+      } else {
+        contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+      }
+    });
 
-    private _init() {
-        this.init();
-        this._createResources();
+    const html = template(contextAndStubs);
 
-        this.eventBus().emit(BLOCK_EVENT.FLOW_RENDER);
-    }
+    const temp = document.createElement('template');
 
-    protected init() {
+    temp.innerHTML = html;
+
+    const replaceStub = (component: Block) => {
+      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+
+      if (!stub) {
         return;
-    }
+      }
 
-    _componentDidMount() {
-        this.componentDidMount();
-    }
+      component.getContent()?.append(...Array.from(stub.childNodes));
 
-    componentDidMount() {
-        return;
-    }
-
-    public dispatchComponentDidMount() {
-        this.eventBus().emit(BLOCK_EVENT.FLOW_CDM);
-
-        Object.values(this.children).forEach(child => {
-            if (Array.isArray(child)) {
-                child.forEach(ch => ch.dispatchComponentDidMount());
-            } else {
-                child.dispatchComponentDidMount();
-            }
-        });
-    }
-
-    protected inputSetProps(input: Block<IInputProps> | undefined, validateType: VALIDATE_TYPES, required: boolean) {
-        if (!input) {
-            return;
-        }
-
-        input.setProps({
-            events: {
-                change: (event) => {
-                    if (event) {
-                        const errors = validate(validateType, (event.target! as HTMLInputElement).value, required);
-
-                        input.setProps({
-                            value: (event.target! as HTMLInputElement).value,
-                        });
-
-                        if (errors) {
-                            input.setProps({errorText: errors});
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    private _componentDidUpdate(oldProps: P, newProps: P) {
-        if (this.componentDidUpdate(oldProps, newProps)) {
-            this.eventBus().emit(BLOCK_EVENT.FLOW_RENDER);
-        }
-    }
-
-    protected componentDidUpdate(_oldProps: P, _newProps: P) {
-        return true;
-    }
-
-    setProps = (nextProps: Partial<P>) => {
-        if (!nextProps) {
-            return;
-        }
-
-        Object.assign(this.props, nextProps);
+      stub.replaceWith(component.getContent()!);
     };
 
-    get element() {
-        return this._element;
-    }
+    Object.entries(this.children).forEach(([_, component]) => {
+      if (Array.isArray(component)) {
+        component.map((el) => replaceStub(el));
+      } else {
+        replaceStub(component);
+      }
+    });
 
-    private _render() {
-        const fragment = this.render();
-        this._removeEvents();
+    return temp.content;
+  }
 
-        const newElement = fragment.firstElementChild as HTMLElement;
+  protected render(): DocumentFragment {
+    return new DocumentFragment();
+  }
 
-        if (this._element && newElement) {
-            this._element.replaceWith(newElement);
-        }
+  getContent() {
+    return this.element;
+  }
 
-        this._element = newElement;
-
-        this._addEvents();
-    }
-
-    protected compile(template: (context: any) => string, context: any) {
-        const contextAndStubs = {...context};
-
-        Object.entries(this.children).forEach(([name, component]) => {
-            if (Array.isArray(component)) {
-                contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`);
-            } else {
-                contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-            }
-        });
-
-        const html = template(contextAndStubs);
-
-        const temp = document.createElement('template');
-
-        temp.innerHTML = html;
-
-        const replaceStub = (component: Block) => {
-            const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-
-            if (!stub) {
-                return;
-            }
-
-            component.getContent()?.append(...Array.from(stub.childNodes));
-
-            stub.replaceWith(component.getContent()!);
-        };
-
-        Object.entries(this.children).forEach(([_, component]) => {
-            if (Array.isArray(component)) {
-                component.map((el) => replaceStub(el));
-            } else {
-                replaceStub(component);
-            }
-        });
-
-        return temp.content;
-    }
-
-    protected render(): DocumentFragment {
-        return new DocumentFragment();
-    }
-
-    getContent() {
-        return this.element;
-    }
-
-    _makePropsProxy(props: P) {
+  _makePropsProxy(props: P) {
     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const self = this;
+    const self = this;
 
-        return new Proxy(props, {
-            get(target, prop: string) {
-                const value = target[prop];
-                return typeof value === 'function' ? value.bind(target) : value;
-            },
-            set(target, prop: string, value) {
-                const oldTarget = {...target};
+    return new Proxy(props, {
+      get(target, prop: string) {
+        const value = target[prop];
+        return typeof value === 'function' ? value.bind(target) : value;
+      },
+      set(target, prop: string, value) {
+        const oldTarget = {...target};
 
-                target[prop as keyof P] = value;
+        target[prop as keyof P] = value;
 
-                // Запускаем обновление компоненты
-                // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-                self.eventBus().emit(BLOCK_EVENT.FLOW_CDU, oldTarget, target);
-                return true;
-            },
-            deleteProperty() {
-                throw new Error('Нет доступа');
-            }
-        });
-    }
+        // Запускаем обновление компоненты
+        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
+        self.eventBus().emit(BLOCK_EVENT.FLOW_CDU, oldTarget, target);
+        return true;
+      },
+      deleteProperty() {
+        throw new Error('Нет доступа');
+      },
+    });
+  }
 
-    private _createDocumentElement(tagName: string) {
+  private _createDocumentElement(tagName: string) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-        const element = document.createElement(tagName);
-        return element;
-    }
+    const element = document.createElement(tagName);
+    return element;
+  }
 
-    public show(force = false) {
-        if (force) {
+  public show(force = false) {
+    if (force) {
       this.getContent()!.classList.add('route-active');
-        } else {
-            if (this.getContent()) {
+    } else {
+      if (this.getContent()) {
         this.getContent()!.classList.add('route-hidden');
 
         setTimeout(() => {
           this.getContent()!.classList.remove('route-hidden');
           this.getContent()!.classList.add('route-active');
         }, 200);
-            }
-        }
+      }
     }
+  }
 
-    public hide() {
+  public hide() {
     this.getContent()!.classList.remove('route-active');
     this.getContent()!.classList.add('route-hidden');
-    }
+  }
 
-    public destroy() {
-        if (this._element) {
-            this._element.remove();
-            this.onDestroy();
-        }
+  public destroy() {
+    if (this._element) {
+      this._element.remove();
+      this.onDestroy();
     }
+  }
 
-    public onDestroy() {
-        return;
-    }
+  public onDestroy() {
+    return;
+  }
 }

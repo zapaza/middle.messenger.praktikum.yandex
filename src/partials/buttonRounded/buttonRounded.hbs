@@ -1,5 +1,5 @@
-<button type="{{#if type }}{{type}}{{^}}button{{/if}}">
-    {{ text }}
+<button class="button-rounded" type="{{#if type }}{{type}}{{^}}button{{/if}}">
+  {{#if text }} {{ text }} {{/if}}
   <span class="{{{ iconClass }}}"></span>
 </button>
 
