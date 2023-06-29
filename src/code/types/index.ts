@@ -141,6 +141,7 @@ export interface IChatHeader {
   currentChat: IChatItem;
   buttonAddUser: IButtonRoundedProps;
   buttonRemoveUser: IButtonRoundedProps;
+  buttonRemoveChat: IButtonProps;
 }
 
 

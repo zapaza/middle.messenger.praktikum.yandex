@@ -27,8 +27,22 @@ export interface IChatItem {
   last_message: IChatLastMessage;
   created_by: number,
 }
+
 export interface INewChatBody {
   title: string;
+}
+
+export interface IRemoveChatBody {
+  chatId: string;
+}
+
+export interface IRemoveChatResponse {
+  userId: number;
+  result: {
+    id: number;
+    title: string;
+    avatar: string;
+  };
 }
 
 export interface INewChatResponse {

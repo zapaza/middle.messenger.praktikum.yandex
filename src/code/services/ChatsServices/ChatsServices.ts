@@ -1,7 +1,7 @@
 import {HTTPBaseRequest} from '../../base/HTTPBaseRequest';
 import {Endpoints} from '../../endpoints';
 import {store} from '../../../store';
-import {IChatItem, IChatTokenBody, IChatTokenResponse, IChatUserPayload, IGetChatParams, INewChatBody, INewChatResponse} from './types';
+import {IChatItem, IChatTokenBody, IChatTokenResponse, IChatUserPayload, IGetChatParams, INewChatBody, INewChatResponse, IRemoveChatBody, IRemoveChatResponse} from './types';
 import {METHOD} from '../../types';
 import {router} from '../../../utils/useRouter';
 
@@ -37,7 +37,16 @@ export class ChatsServices extends HTTPBaseRequest {
         return response;
       }
     })
-      .catch((e:Error) => {
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+
+  public removeCurrentChat(params: IRemoveChatBody) {
+    return this.delete<IRemoveChatResponse>(`${this.apiUrl}${Endpoints.CHATS}`, {
+      data: JSON.stringify(params),
+    }).then(() => router.go(`/messages/`, true))
+      .catch((e: Error) => {
         console.log(e);
       });
   }
@@ -59,7 +68,7 @@ export class ChatsServices extends HTTPBaseRequest {
 
   public removeUserForChat(params: IChatUserPayload) {
     return this.delete(`${this.apiUrl}${Endpoints.CHAT_USERS}`, {
-      data: JSON.stringify(params)
+      data: JSON.stringify(params),
     });
   }
 }

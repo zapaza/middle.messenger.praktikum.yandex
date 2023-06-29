@@ -321,7 +321,7 @@ export class ChatPage extends Block {
 
     if (this.props.chatList && this.props.chatList.length > 0) {
       this.children.chatsList = this.props.chatList.map((el: IChatItem) => new ChatItemComponent({
-        avatar: `https://ya-praktikum.tech/api/v2/resources/${el.avatar}`,
+        avatar: `https://ya-praktikum.tech/api/v2/resources`,
         chatName: el.title,
         count: el.unread_count,
         message: el.last_message?.content || '',
@@ -364,6 +364,13 @@ export class ChatPage extends Block {
                   isChatOpen: false,
                 });
               },
+            }
+          },
+          buttonRemoveChat: {
+            text: 'Удалить чат',
+            isSecondary: true,
+            events: {
+              click: () => services.chatServices.removeCurrentChat({chatId: this.props.currentChatId})
             }
           }
         });
