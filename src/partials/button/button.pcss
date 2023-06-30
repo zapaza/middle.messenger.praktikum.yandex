@@ -9,6 +9,11 @@
     transition: .2s ease-in-out  opacity, filter;
     padding: 12px;
 
+    &[disabled] {
+        opacity: .7;
+        pointer-events: none;
+    }
+
     &--primary {
         background: var(--color-accent);
         font-size: 14px;

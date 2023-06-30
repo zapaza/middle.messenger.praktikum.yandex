@@ -5,8 +5,31 @@
         border-right: 1px solid var(--color-subtext);
     }
 
+    &__sidebar-content {
+        padding: 8px;
+
+        .button {
+            margin-bottom: 16px;
+        }
+    }
+
     &__content {
         width: 100%;
+        max-height: 100vh;
+        position: relative;
+        overflow: auto;
+    }
+
+    &__content-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    &__content-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
     }
 
     &__content-body {

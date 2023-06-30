@@ -1,7 +1,9 @@
 <div class="error flex flex-ai-center flex-jc-center flex-column gap-10">
-    <div class="error__code">{{ errorCode }}</div>
-    <div class="error__title">{{ errorText }}</div>
+  <div class="error__code">{{ errorCode }}</div>
+  <div class="error__title">{{ errorText }}</div>
+  {{#if button}}
     <div class="error__button">
-        {{{ button }}}
+      {{{ button }}}
     </div>
+  {{/if}}
 </div>

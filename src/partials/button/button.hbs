@@ -1,4 +1,5 @@
 <button class="button {{#if isSecondary }}button--secondary{{^}} button--primary {{/if}}"
+        {{#if disabled}} disabled {{/if}}
         type="{{#if type }}{{type}}{{^}}button{{/if}}">
     {{ text }}
 </button>

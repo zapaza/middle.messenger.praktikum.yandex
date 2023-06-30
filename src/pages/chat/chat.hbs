@@ -1,26 +1,53 @@
 <main class="chat flex flex-11a">
     <aside class="chat__sidebar flex-00a">
         {{{ chatSearch }}}
-        {{#each chatsList}}
+      <div class="chat__sidebar-content">
+        {{{ addChatButton }}}
+        {{#if chatsList}}
+          {{#each chatsList}}
             {{{ this }}}
-        {{/each}}
+          {{/each}}
+        {{^}}
+          <p>У вас еще нет чатов</p>
+        {{/if}}
+      </div>
     </aside>
     <article class="chat__content flex flex-column flex-11a">
+      {{# if IsError}}
+        {{{ error }}}
+      {{/if}}
+
+      {{#if newChatFormOpen}}
+        {{{newChatFrom}}}
+      {{/if}}
+
+      {{#if removeUserForm}}
+        {{{formRemoveUser}}}
+      {{/if}}
+
+      {{#if addUserForm }}
+        {{{formAddUser}}}
+      {{/if}}
+
+      {{#if isChatOpen}}
         <div class="chat__content-header flex-00a flex-column flex-jc-center flex-ai-center">
           {{{ chatHeader }}}
         </div>
         <div class="chat__content-body flex flex-11a flex-column flex-ai-end flex-jc-end">
-        {{#if messages}}
-          {{#each messages}}
-            {{{ this }}}
-          {{/each}}
-        {{^}}
-         {{{ error }}}
-        {{/if}}
+          {{#if messages}}
+            {{#each messages}}
+              {{{ this }}}
+            {{/each}}
+          {{/if}}
         </div>
 
         <div class="chat__content-footer flex-00a">
           {{{ chatBottom }}}
         </div>
+      {{/if}}
+
+      {{#if dontHasChatId }}
+        {{{noOpenChat}}}
+      {{/if}}
     </article>
 </main>
