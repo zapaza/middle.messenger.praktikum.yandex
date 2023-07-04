@@ -1,6 +1,6 @@
 import {IInputProps, IValidationOptions} from '../code/types';
 import {FIELDS_PATTERN, VALIDATE_TYPES} from '../code/dictionary/dictionary';
-import {Block} from '../code/base/Block';
+import {Block} from '../code/base/block/Block';
 
 function checkingRegExp(value: string | undefined, options?: IValidationOptions, pattern?: string): string[] {
   const errors: string[] = [];

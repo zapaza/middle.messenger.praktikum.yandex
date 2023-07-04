@@ -1,4 +1,4 @@
-import {Block} from '../../../code/base/Block';
+import {Block} from '../../../code/base/block/Block';
 import template from './chatSearch.hbs';
 import './chatSearch.pcss';
 import {InputComponent} from '../../input/inputComponent';

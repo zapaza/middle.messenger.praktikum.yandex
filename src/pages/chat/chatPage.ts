@@ -1,6 +1,6 @@
 import './chat.pcss';
 import template from './chat.hbs';
-import {Block} from '../../code/base/Block';
+import {Block} from '../../code/base/block/Block';
 import {IFormProps, IInputProps} from '../../code/types';
 import {ChatSearchComponent} from '../../partials/chat/chatSearch/chatSearchComponent';
 import {ChatItemComponent} from '../../partials/chat/chatItem/chatItemComponent';

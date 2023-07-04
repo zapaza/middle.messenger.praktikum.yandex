@@ -1,4 +1,4 @@
-import {HTTPBaseRequest} from "../../base/HTTPBaseRequest";
+import {HTTPBaseRequest} from "../../base/httpBaseRequest/HTTPBaseRequest";
 import {Endpoints} from "../../endpoints";
 import {router} from "../../../utils/useRouter";
 import {store} from "../../../store";

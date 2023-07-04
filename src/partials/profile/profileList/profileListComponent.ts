@@ -1,6 +1,6 @@
 import './profileList.pcss';
 import template from './profileList.hbs';
-import { Block } from "../../../code/base/Block";
+import { Block } from "../../../code/base/block/Block";
 import { IProfileListProps } from "../../../code/types";
 import {Button} from "../../button/buttonComponent";
 import services from '../../../code/services';

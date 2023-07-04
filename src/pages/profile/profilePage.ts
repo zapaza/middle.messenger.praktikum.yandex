@@ -1,4 +1,4 @@
-import {Block} from "../../code/base/Block";
+import {Block} from "../../code/base/block/Block";
 import {IProfileListProps, IProfilePageProps} from "../../code/types";
 import template from './profile.hbs';
 import {ProfileListComponent} from "../../partials/profile/profileList/profileListComponent";
