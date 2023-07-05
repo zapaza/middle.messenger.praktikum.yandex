@@ -23,7 +23,7 @@ export class ProfilePage extends Block {
       settingBlock: {
         items: [
           {
-            link: '/account-edit/avatar',
+            link: '/avatar-edit',
             name: 'Изменить аватар',
           },
           {

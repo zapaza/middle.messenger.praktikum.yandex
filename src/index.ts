@@ -24,7 +24,7 @@ router
   .use('/account', ProfilePage, 'protected')
   .use('/account-edit', ProfileSettings, 'protected')
   .use('/password-edit', ProfileChangePassword, 'protected')
-  .use('/account-edit/avatar', ProfileChangeAvatar, 'protected')
+  .use('/avatar-edit', ProfileChangeAvatar, 'protected')
   .use('/500', ServerErrorPage)
   .use('*', NotFoundPage)
   .start();

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "web-messenger",
   "scripts": {
-    "start": "cross-env NODE_ENV=production webpack && node ./server.js",
+    "start": "cross-env NODE_ENV=production webpack && node ./server/server.js",
     "dev": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint **/*.ts --ignore-pattern node_modules/",

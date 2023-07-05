@@ -6,20 +6,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require('webpack');
+require('dotenv').config();
 
-console.log(process.env.RESOURCES_URL)
 module.exports = {
   mode: isDev ? 'development' : 'production',
-  entry: './src/index.ts',
+  entry: path.resolve(__dirname,'./src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'messenger.bundle.js',
+    filename: 'main.bundle.js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, './dist'),
     },
-    hot: true,
+    hot: isDev,
     port: 3000,
     historyApiFallback: true,
     compress: true,
@@ -82,12 +82,12 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
       'process.env.RESOURCES_URL': JSON.stringify(process.env.RESOURCES_URL),
       'process.env.API_WS_URL': JSON.stringify(process.env.API_WS_URL),
     }),
-    new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
