@@ -1,11 +1,11 @@
 import './chat.pcss';
 import template from './chat.hbs';
 import {Block} from '../../code/base/block/Block';
-import {IFormProps, IInputProps} from '../../code/types';
+import {IFormProps, IInputProps, IMessageField} from '../../code/types';
 import {ChatSearchComponent} from '../../partials/chat/chatSearch/chatSearchComponent';
 import {ChatItemComponent} from '../../partials/chat/chatItem/chatItemComponent';
 import {ChatWindowHeaderComponent} from '../../partials/chat/chatWindow/header/chatWindowHeaderComponent';
-import { ChatMessageComponent } from "../../partials/chat/chatWindow/chatMessage/chatMessageComponent";
+import {ChatMessageComponent} from '../../partials/chat/chatWindow/chatMessage/chatMessageComponent';
 import {Error} from '../../partials/error/errorComponent';
 import services from '../../code/services';
 import {store} from '../../store';
@@ -14,7 +14,7 @@ import {FormComponent} from '../../partials/form/formComponent';
 import {VALIDATE_TYPES} from '../../code/dictionary/dictionary';
 import {validate, validateForm} from '../../utils/validation';
 import {collectingFormFields} from '../../utils/collectingFormFields';
-import {IChatItem, IChatUserPayload, INewChatBody} from '../../code/services/ChatsServices/types';
+import {IChatItem, IChatSocketMessage, IChatUserPayload, INewChatBody} from '../../code/services/ChatsServices/types';
 import {router} from '../../utils/useRouter';
 import {getLocalStorageItem} from '../../utils/localStorage';
 import {ChatBottomComponent} from '../../partials/chat/chatWindow/message/chatMessageComponent';
@@ -140,7 +140,7 @@ export class ChatPage extends Block {
         submit: async (event: Event) => {
           event.preventDefault();
           const target = event.target as HTMLFormElement;
-          const formdata: {title: string} = collectingFormFields([...target]);
+          const formdata = collectingFormFields([...target]);
           const data: IChatUserPayload = {
             chatId: this.props.currentChatId,
             users: [Number(formdata.title)],
@@ -189,7 +189,7 @@ export class ChatPage extends Block {
         submit: async (event: Event) => {
           event.preventDefault();
           const target = event.target as HTMLFormElement;
-          const formdata: {title: string} = collectingFormFields([...target]);
+          const formdata = collectingFormFields([...target]);
           const data: IChatUserPayload = {
             chatId: this.props.currentChatId,
             users: [Number(formdata.title)],
@@ -253,8 +253,8 @@ export class ChatPage extends Block {
               submit: async (event: Event) => {
                 event.preventDefault();
                 const target = event.target as HTMLFormElement;
-                const data: INewChatBody = collectingFormFields([...target]);
-                const response = await services.chatServices.createNewChat(data);
+                const data = collectingFormFields([...target]);
+                const response = await services.chatServices.createNewChat(data as INewChatBody);
 
                 if (response) {
                   await services.chatServices.getChats();
@@ -346,33 +346,33 @@ export class ChatPage extends Block {
           currentChat: currentChat,
           buttonRemoveUser: {
             iconClass: 'icon-remove',
-            events:{
+            events: {
               click: () => {
-                this.setProps( {
+                this.setProps({
                   removeUserForm: true,
                   isChatOpen: false,
                 });
               },
-            }
+            },
           },
           buttonAddUser: {
             iconClass: 'icon-add',
-            events:{
+            events: {
               click: () => {
-                this.setProps( {
+                this.setProps({
                   addUserForm: true,
                   isChatOpen: false,
                 });
               },
-            }
+            },
           },
           buttonRemoveChat: {
             text: 'Удалить чат',
             isSecondary: true,
             events: {
-              click: () => services.chatServices.removeCurrentChat({chatId: this.props.currentChatId})
-            }
-          }
+              click: () => services.chatServices.removeCurrentChat({chatId: this.props.currentChatId}),
+            },
+          },
         });
       }
 
@@ -387,7 +387,7 @@ export class ChatPage extends Block {
                 content: sendMessageValue,
                 type: 'message',
               });
-              this.children.chatBottom.children.messageField.setProps({
+              ((this.children.chatBottom as Block<ChatBottomComponent>).children.messageField as Block<IMessageField>)?.setProps({
                 value: '',
               });
             },
@@ -405,17 +405,19 @@ export class ChatPage extends Block {
 
     if (this.props.chatMessages?.length) {
       store.subscribe((state) => {
-        this.children.messages = state.messagesList.map((el) => {
+        this.children.messages = state.messagesList.map((el: IChatSocketMessage) => {
           const userId = Number(getLocalStorageItem('userId'));
           return new ChatMessageComponent({
             messageContent: el?.content || '',
             messageDate: el?.time,
             isIncoming: el?.user_id !== userId,
-            author: el?.user_id === getLocalStorageItem('userId') ? 'Я' : el?.user_id,
+            author: el?.user_id === getLocalStorageItem('userId') ? 'Я' : String(el?.user_id),
           });
         });
       });
     }
+
+    return true;
   }
 
   onDestroy() {

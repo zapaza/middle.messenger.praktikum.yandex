@@ -9,6 +9,8 @@ import {router} from './utils/useRouter';
 import services from './code/services';
 import {ProfileChangePassword} from './pages/profile/profileChangePassword';
 import {ProfileChangeAvatar} from './pages/profile/profileChangeAvatar';
+import './styles/index.pcss';
+import * as process from 'process';
 
 router
   .setPublicRedirect('/messages')
@@ -26,3 +28,7 @@ router
   .use('/500', ServerErrorPage)
   .use('*', NotFoundPage)
   .start();
+
+console.log(
+  process.env.API_URl,
+);
