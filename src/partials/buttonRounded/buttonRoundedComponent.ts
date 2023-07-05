@@ -1,4 +1,4 @@
-import {Block} from '../../code/base/Block';
+import {Block} from '../../code/base/block/Block';
 import {IButtonRoundedProps} from '../../code/types';
 import template from './buttonRounded.hbs';
 import './button.pcss';

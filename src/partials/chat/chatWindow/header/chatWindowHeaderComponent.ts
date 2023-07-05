@@ -1,4 +1,4 @@
-import {Block} from '../../../../code/base/Block';
+import {Block} from '../../../../code/base/block/Block';
 import './chatWindowHeader.pcss';
 import template from './chatWindowHeader.hbs';
 import {IChatHeader} from '../../../../code/types';

@@ -1,4 +1,4 @@
-import {Block} from '../../../../code/base/Block';
+import {Block} from '../../../../code/base/block/Block';
 import {IChatWindowMessage} from '../../../../code/types';
 import template from './chatWindowMessage.hbs';
 import './chatWindowMessage.pcss';

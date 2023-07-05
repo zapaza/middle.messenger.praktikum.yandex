@@ -1,4 +1,4 @@
-import {Block} from './Block';
+import {Block} from './block/Block';
 
 export default function renderDOM(block: Block) {
   document.title = 'Изменение пароля';

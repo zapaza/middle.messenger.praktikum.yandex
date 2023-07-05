@@ -1,4 +1,4 @@
-import {Block} from "../../code/base/Block";
+import {Block} from "../../code/base/block/Block";
 import {ButtonRoundedComponent} from "../../partials/buttonRounded/buttonRoundedComponent";
 import {FormComponent} from "../../partials/form/formComponent";
 import template from "./profile-settings.hbs";

@@ -1,6 +1,6 @@
 import {Route} from './Route';
-import {Block} from './Block';
-import {IRouterParams, TAccess} from '../types';
+import {Block} from '../block/Block';
+import {IRouterParams, TAccess} from '../../types';
 
 export class Router {
   public routes: Route[];

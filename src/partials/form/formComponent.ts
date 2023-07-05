@@ -1,7 +1,7 @@
 import {IFormProps, IInputProps, IButtonProps} from '../../code/types';
 import template from './form.hbs';
 import './form.pcss';
-import {Block} from '../../code/base/Block';
+import {Block} from '../../code/base/block/Block';
 import {InputComponent} from '../input/inputComponent';
 import {Button} from '../button/buttonComponent';
 

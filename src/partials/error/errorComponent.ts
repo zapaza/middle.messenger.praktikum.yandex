@@ -1,5 +1,5 @@
 import {IErrorProps} from '../../code/types';
-import {Block} from '../../code/base/Block';
+import {Block} from '../../code/base/block/Block';
 import {Button} from '../button/buttonComponent';
 import template from './error.hbs';
 

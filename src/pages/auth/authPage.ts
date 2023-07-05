@@ -1,5 +1,5 @@
 import template from './auth.hbs';
-import {Block} from '../../code/base/Block';
+import {Block} from '../../code/base/block/Block';
 import {IButtonProps, IFormProps, IInputProps} from '../../code/types';
 import {FormComponent} from '../../partials/form/formComponent';
 import {VALIDATE_TYPES} from '../../code/dictionary/dictionary';

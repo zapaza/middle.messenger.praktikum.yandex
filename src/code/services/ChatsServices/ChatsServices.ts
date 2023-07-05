@@ -1,4 +1,4 @@
-import {HTTPBaseRequest} from '../../base/HTTPBaseRequest';
+import {HTTPBaseRequest} from '../../base/httpBaseRequest/HTTPBaseRequest';
 import {Endpoints} from '../../endpoints';
 import {store} from '../../../store';
 import {IChatItem, IChatTokenBody, IChatTokenResponse, IChatUserPayload, IGetChatParams, INewChatBody, INewChatResponse, IRemoveChatBody, IRemoveChatResponse} from './types';

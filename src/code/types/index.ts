@@ -10,8 +10,9 @@ export enum METHOD {
 
 export interface RequestOptions {
   method?: METHOD;
-  data?:  Document | XMLHttpRequestBodyInit | null;
-  headers?: Record<string, string>
+  data?:  Document | XMLHttpRequestBodyInit | null | NonNullable<unknown>;
+  withCredentials?: boolean;
+  headers?: Record<string, string>;
 }
 
 export interface IHTTPBaseRequest {
