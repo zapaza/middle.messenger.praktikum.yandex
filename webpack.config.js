@@ -82,10 +82,14 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new Dotenv({
-      path: isDev? './.env' : '../etc/secrets/.env'
+    new webpack.DefinePlugin({
+      'process.env': {
+        API_URL: JSON.stringify(process.env.API_URL),
+        RESOURCES_URL: JSON.stringify(process.env.RESOURCES_URL),
+        API_WS_URL: JSON.stringify(process.env.API_WS_URL),
+      },
     }),
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
