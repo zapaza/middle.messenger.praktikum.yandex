@@ -83,7 +83,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new Dotenv(),
+    new Dotenv({
+      path: isDev? './.env' : './etc/secrets/.env'
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
