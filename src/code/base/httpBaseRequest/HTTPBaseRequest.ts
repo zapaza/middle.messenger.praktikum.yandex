@@ -1,5 +1,5 @@
-import {IHTTPBaseRequest, METHOD, RequestOptions} from "../types";
-import {queryStringify} from "../../utils";
+import {IHTTPBaseRequest, METHOD, RequestOptions} from "../../types";
+import {queryStringify} from "../../../utils";
 
 export class HTTPBaseRequest implements IHTTPBaseRequest {
   protected xhr: XMLHttpRequest;

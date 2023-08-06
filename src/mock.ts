@@ -1,5 +1,4 @@
 import {
-  IChatPage,
   IProfilePageProps,
   IProfileSettingsPageProps,
 } from './code/types';
@@ -176,7 +175,7 @@ export const ProfileChangePasswordMock: IProfileSettingsPageProps = {
 };
 
 
-export const ChatPageMock: IChatPage = {
+export const ChatPageMock = {
   chatBottom: {
     buttonAttach: {
       type: 'button',

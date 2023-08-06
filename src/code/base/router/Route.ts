@@ -1,0 +1,57 @@
+import {TProps} from '../../types';
+import {Block} from '../block/Block';
+
+function render(query: string, block: Block) {
+  const root = document.querySelector(query);
+  if (root) {
+    root.append(block.getContent()!);
+    return root;
+  }
+  return false;
+}
+
+export class Route {
+  public pathname: string;
+
+  private _blockClass: typeof Block;
+
+  private _block: Block | null;
+
+  private _props: TProps;
+
+  constructor(pathname: string, view: typeof Block, props: TProps) {
+    this.pathname = pathname;
+    this._blockClass = view;
+    this._block = null;
+    this._props = props;
+  }
+
+  navigate(pathname: string) {
+    if (this.match(pathname)) {
+      this.pathname = pathname;
+      this.render();
+    }
+  }
+
+  leave() {
+    if (this._block) {
+      this._block.destroy();
+    }
+  }
+
+  match(pathname: string) {
+    return pathname === this.pathname;
+  }
+
+  render(force = false) {
+    if (!this._block) {
+      this._block = new this._blockClass({});
+      render(this._props.rootQuery, this._block);
+      this._block.show(force);
+    }
+  }
+
+  getPathname() {
+    return this.pathname;
+  }
+}

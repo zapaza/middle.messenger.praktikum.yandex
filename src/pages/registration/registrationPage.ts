@@ -1,5 +1,5 @@
 import template from "./registration.hbs";
-import {Block} from "../../code/base/Block";
+import {Block} from "../../code/base/block/Block";
 import {IButtonProps, IInputProps} from "../../code/types";
 import {FormComponent} from "../../partials/form/formComponent";
 import '../auth/auth.pcss';

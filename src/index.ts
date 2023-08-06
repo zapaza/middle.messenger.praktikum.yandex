@@ -9,6 +9,8 @@ import {router} from './utils/useRouter';
 import services from './code/services';
 import {ProfileChangePassword} from './pages/profile/profileChangePassword';
 import {ProfileChangeAvatar} from './pages/profile/profileChangeAvatar';
+import './styles/index.pcss';
+import * as process from 'process';
 
 router
   .setPublicRedirect('/messages')
@@ -22,7 +24,11 @@ router
   .use('/account', ProfilePage, 'protected')
   .use('/account-edit', ProfileSettings, 'protected')
   .use('/password-edit', ProfileChangePassword, 'protected')
-  .use('/account-edit/avatar', ProfileChangeAvatar, 'protected')
+  .use('/avatar-edit', ProfileChangeAvatar, 'protected')
   .use('/500', ServerErrorPage)
   .use('*', NotFoundPage)
   .start();
+
+console.log(
+  process.env.API_URl,
+);

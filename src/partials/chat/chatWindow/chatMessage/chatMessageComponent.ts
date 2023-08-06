@@ -1,6 +1,6 @@
 import './chatMessage.pcss';
 import template from './chatMessage.hbs';
-import {Block} from '../../../../code/base/Block';
+import {Block} from '../../../../code/base/block/Block';
 import {IChatMessage} from '../../../../code/types';
 
 export class ChatMessageComponent extends Block {
